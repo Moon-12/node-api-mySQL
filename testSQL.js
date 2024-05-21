@@ -1,5 +1,5 @@
+import db from "./env/secret";
 var mysql = require("mysql2");
-const db = require("./env/secret");
 
 var con = mysql.createConnection({
   host: db.host,
@@ -10,4 +10,8 @@ var con = mysql.createConnection({
 con.connect(function (err) {
   if (err) throw err;
   console.log("Connected!");
+  con.query("SELECT * FROM nammadb.table2", function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+  });
 });
