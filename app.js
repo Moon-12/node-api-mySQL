@@ -1,8 +1,10 @@
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
-const dummyEndpointRoutes = require("./api/routes/dummyEndpointRoutes");
+const authRoutes = require("./api/routes/auth.routes");
+const db = require("./models/index");
 
+const Role = db.role;
 const app = express();
 
 // app.use acts as a middleware and every request has to pass thrgh this
@@ -24,12 +26,32 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/dummy-endpoint", dummyEndpointRoutes);
+//this is to to sync models with actual tables in the db
+db.sequelize.sync({ force: true }).then(() => {
+  initial();
+});
+function initial() {
+  Role.create({
+    id: 1,
+    name: "user",
+  });
+
+  Role.create({
+    id: 2,
+    name: "moderator",
+  });
+
+  Role.create({
+    id: 3,
+    name: "admin",
+  });
+}
+
+app.use("/api/auth", authRoutes);
 
 //handling error
-
 app.use((req, res, next) => {
-  const error = new Error("not found");
+  const error = new Error(" route not found");
   error.status = 404;
   next(error);
 });
