@@ -27,12 +27,12 @@ db.role = require("../models/role.model.js")(sequelize, Sequelize);
 
 //with this we are adding foreign keys
 db.role.belongsToMany(db.user, {
-  through: "user_roles",
+  through: "USER_ROLE",
 });
 db.user.belongsToMany(db.role, {
-  through: "user_roles",
+  through: "USER_ROLE",
 });
 
-db.ROLES = ["user", "admin", "moderator"];
+db.ROLES = ["user", "student", "faculty"];
 
 module.exports = db;

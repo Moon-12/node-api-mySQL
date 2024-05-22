@@ -27,25 +27,7 @@ app.use((req, res, next) => {
 });
 
 //this is to to sync models with actual tables in the db
-db.sequelize.sync({ force: true }).then(() => {
-  initial();
-});
-function initial() {
-  Role.create({
-    id: 1,
-    name: "user",
-  });
-
-  Role.create({
-    id: 2,
-    name: "moderator",
-  });
-
-  Role.create({
-    id: 3,
-    name: "admin",
-  });
-}
+db.sequelize.sync().then(() => {});
 
 app.use("/api/auth", authRoutes);
 
