@@ -1,11 +1,11 @@
 //this model represents roles table in mysql db
 module.exports = (sequelize, Sequelize) => {
-  const Role = sequelize.define("roles", {
-    id: {
+  const Role = sequelize.define("ROLE", {
+    ROLE_ID: {
       type: Sequelize.INTEGER,
       primaryKey: true,
     },
-    name: {
+    ROLE_NAME: {
       type: Sequelize.STRING,
     },
   });

@@ -1,13 +1,13 @@
 //this model represents users table in mysql db
 module.exports = (sequelize, Sequelize) => {
-  const User = sequelize.define("users", {
-    username: {
+  const User = sequelize.define("USER", {
+    USER_NAME: {
       type: Sequelize.STRING,
     },
-    email: {
+    EMAIL: {
       type: Sequelize.STRING,
     },
-    password: {
+    PASSWORD: {
       type: Sequelize.STRING,
     },
   });
