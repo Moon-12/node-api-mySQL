@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const authRoutes = require("./api/routes/auth.routes");
 const db = require("./models/index");
+const createTriggerForTable = require("./trigger/currentUserTrigger");
 
 const Role = db.role;
 const app = express();
@@ -27,7 +28,9 @@ app.use((req, res, next) => {
 });
 
 //this is to to sync models with actual tables in the db
-db.sequelize.sync().then(() => {});
+db.sequelize.sync().then(() => {
+  createTriggerForTable(db.sequelize, "USER");
+});
 
 app.use("/api/auth", authRoutes);
 
