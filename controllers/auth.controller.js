@@ -15,26 +15,28 @@ exports.signup = async (req, res) => {
     USER_NAME: req.body.username,
     EMAIL: req.body.email,
     PASSWORD: bcrypt.hashSync(req.body.password, 8),
+    ROLE_ID: req.body.roleID,
   })
     .then((user) => {
-      if (req.body.roles) {
-        Role.findAll({
-          where: {
-            ROLE_NAME: {
-              [Op.or]: req.body.roles,
-            },
-          },
-        }).then((roles) => {
-          user.setRoles(roles).then(() => {
-            res.send({ message: "User was registered successfully!" });
-          });
-        });
-      } else {
-        // user role = 100
-        user.setRoles([100]).then(() => {
-          res.send({ message: "User was registered successfully!" });
-        });
-      }
+      res.send({ message: "User was registered successfully!" });
+      // if (req.body.roles) {
+      //   Role.findAll({
+      //     where: {
+      //       ROLE_NAME: {
+      //         [Op.or]: req.body.roles,
+      //       },
+      //     },
+      //   }).then((roles) => {
+      //     user.setRoles(roles).then(() => {
+      //       res.send({ message: "User was registered successfully!" });
+      //     });
+      //   });
+      // } else {
+      //   // user role = 100
+      //   user.setRoles([100]).then(() => {
+      //     res.send({ message: "User was registered successfully!" });
+      //   });
+      // }
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });
@@ -70,19 +72,27 @@ exports.login = async (req, res) => {
         expiresIn: 86400, // 24 hours
       });
 
-      var authorities = [];
-      user.getRoles().then((roles) => {
-        for (let i = 0; i < roles.length; i++) {
-          authorities.push("ROLE_" + roles[i].ROLE_NAME.toUpperCase());
-        }
-        res.status(200).send({
-          id: user.ID,
-          username: user.USER_NAME,
-          email: user.EMAIL,
-          roles: authorities,
-          accessToken: token,
-        });
+      res.status(200).send({
+        id: user.ID,
+        username: user.USER_NAME,
+        email: user.EMAIL,
+        role: user.ROLE_ID,
+        accessToken: token,
       });
+
+      // var authorities = [];
+      // user.getRoles().then((roles) => {
+      //   for (let i = 0; i < roles.length; i++) {
+      //     authorities.push("ROLE_" + roles[i].ROLE_NAME.toUpperCase());
+      //   }
+      //   res.status(200).send({
+      //     id: user.ID,
+      //     username: user.USER_NAME,
+      //     email: user.EMAIL,
+      //     roles: authorities,
+      //     accessToken: token,
+      //   });
+      // });
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });

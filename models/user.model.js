@@ -32,6 +32,14 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
         onUpdate: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
+      ROLE_ID: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Role",
+          key: "ID",
+        },
+      },
     },
     {
       tableName: "USER", // Specify the table name explicitly
