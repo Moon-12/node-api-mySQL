@@ -19,7 +19,7 @@ const createTrigger = async (tableName) => {
       BEFORE INSERT ON ${tableName}
       FOR EACH ROW
       BEGIN
-        SET NEW.CREATED_BY = IFNULL(NEW.CREATED_BY, CURRENT_USER());
+        SET NEW.CREATED_BY = CURRENT_USER();
         SET NEW.UPDATED_BY = CURRENT_USER();
       END;
     `;
