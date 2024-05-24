@@ -42,7 +42,7 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  await User.findOne({
+  User.findOne({
     where: {
       EMAIL: req.body.email,
     },
@@ -64,7 +64,7 @@ exports.login = async (req, res) => {
         });
       }
 
-      const token = jwt.sign({ id: user.USER_ID }, env.JWT_KEY, {
+      const token = jwt.sign({ id: user.ID }, env.JWT_KEY, {
         algorithm: "HS256",
         allowInsecureKeySizes: true,
         expiresIn: 86400, // 24 hours
@@ -76,7 +76,7 @@ exports.login = async (req, res) => {
           authorities.push("ROLE_" + roles[i].ROLE_NAME.toUpperCase());
         }
         res.status(200).send({
-          id: user.USER_ID,
+          id: user.ID,
           username: user.USER_NAME,
           email: user.EMAIL,
           roles: authorities,

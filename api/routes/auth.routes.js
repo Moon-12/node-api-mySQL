@@ -9,7 +9,7 @@ router.post("/signup", [
   controller.signup,
 ]);
 
-router.get("/login", controller.login);
+router.post("/login", controller.login);
 // router.get("/:id", (req, res, next) => {
 //   const id = req.params.id;
 //   if (id === "special") {
