@@ -15,9 +15,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-  res.header("Allow-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*");
   res.header(
-    "Allow-Control-Allow-Headers",
+    "Access-Control-Allow-Headers",
     "Origin,X-Requeste-With,Content-Type,Accept,Authorization"
   );
   if (req.method === "OPTIONS") {
