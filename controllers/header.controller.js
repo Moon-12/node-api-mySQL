@@ -17,8 +17,15 @@ exports.fetchHeaderNamesByRoleId = async (req, res, next) => {
       ],
       attributes: ["HEADER_NAME", "ID", "ROUTE"], // We only need the HEADER_NAME attribute
     });
-
-    return res.status(200).json({ message: "success", headers });
+    let responseHeader = [];
+    headers.map((header) => {
+      responseHeader.push({
+        header_name: header.HEADER_NAME,
+        id: header.ID,
+        route: header.ROUTE,
+      });
+    });
+    return res.status(200).json({ message: "success", data: responseHeader });
   } catch (error) {
     console.error("Error fetching header names:", error);
     return res.status(200).json({ error: error });
