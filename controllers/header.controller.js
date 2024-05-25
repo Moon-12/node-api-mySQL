@@ -15,7 +15,7 @@ exports.fetchHeaderNamesByRoleId = async (req, res, next) => {
           attributes: [], // We don't need any attributes from the join table
         },
       ],
-      attributes: ["HEADER_NAME", "ID"], // We only need the HEADER_NAME attribute
+      attributes: ["HEADER_NAME", "ID", "ROUTE"], // We only need the HEADER_NAME attribute
     });
 
     return res.status(200).json({ message: "success", headers });

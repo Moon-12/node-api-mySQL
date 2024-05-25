@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      ROUTE: {
+        type: DataTypes.STRING,
+      },
       CREATED_BY: {
         type: DataTypes.STRING,
       },
