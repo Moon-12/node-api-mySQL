@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const authRoutes = require("./api/routes/auth.routes");
 const roleRoutes = require("./api/routes/role.routes");
+const headerRoutes = require("./api/routes/header.routes");
 const db = require("./models/index");
 const createTriggerForTable = require("./trigger/currentUserTrigger");
 
@@ -35,6 +36,7 @@ db.sequelize.sync().then(() => {
 
 app.use("/api/auth", authRoutes);
 app.use("/role", roleRoutes);
+app.use("/header", headerRoutes);
 
 //handling error
 app.use((req, res, next) => {
