@@ -51,7 +51,9 @@ exports.login = async (req, res) => {
   })
     .then((user) => {
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res
+          .status(404)
+          .send({ message: req.body.email + "is invalid User!" });
       }
 
       var passwordIsValid = bcrypt.compareSync(
@@ -66,17 +68,22 @@ exports.login = async (req, res) => {
         });
       }
 
-      const token = jwt.sign({ id: user.ID }, env.JWT_KEY, {
-        algorithm: "HS256",
-        allowInsecureKeySizes: true,
-        expiresIn: 86400, // 24 hours
-      });
+      const token = jwt.sign(
+        {
+          id: user.ID,
+          username: user.USER_NAME,
+          email: user.EMAIL,
+          roleId: user.ROLE_ID,
+        },
+        env.JWT_KEY,
+        {
+          algorithm: "HS256",
+          allowInsecureKeySizes: true,
+          expiresIn: "10s", // 24 hours
+        }
+      );
 
       res.status(200).send({
-        id: user.ID,
-        username: user.USER_NAME,
-        email: user.EMAIL,
-        roleId: user.ROLE_ID,
         accessToken: token,
       });
 
